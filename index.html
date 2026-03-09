@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личное Досье — Идентификационная Карта</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a2a4a;
+            --primary-dark: #0f1a2e;
+            --accent: #c9a84c;
+            --accent-light: #e0c76e;
+            --bg: #f4f1eb;
+            --bg-card: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #5a5a5a;
+            --border: #d1ccc3;
+            --red-seal: #8b1a1a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 29px,
+                    rgba(0,0,0,0.015) 29px,
+                    rgba(0,0,0,0.015) 30px
+                );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .top-bar {
+            background: var(--primary);
+            padding: 10px 0;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+            z-index: 10;
+        }
+
+        .top-bar-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gov-icon {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gov-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent);
+        }
+
+        .top-bar-title {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .top-bar-subtitle {
+            color: var(--accent);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .top-bar-right {
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .classification-bar {
+            background: var(--primary-dark);
+            text-align: center;
+            padding: 6px;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .document-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .document-header::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--primary);
+        }
+
+        .doc-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .doc-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .doc-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .main-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+        }
+
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header-badge {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border-radius: 1px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar-frame {
+            width: 180px;
+            height: 220px;
+            border: 3px solid var(--primary);
+            padding: 6px;
+            background: white;
+            position: relative;
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            display: block;
+        }
+
+        .stamp {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 70px;
+            height: 70px;
+            border: 3px solid var(--red-seal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.9);
+            transform: rotate(-15deg);
+            z-index: 2;
+        }
+
+        .stamp-inner {
+            width: 54px;
+            height: 54px;
+            border: 1.5px solid var(--red-seal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .stamp-text {
+            font-size: 6px;
+            font-weight: 900;
+            color: var(--red-seal);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .stamp-check {
+            font-size: 16px;
+            color: var(--red-seal);
+            font-weight: 900;
+        }
+
+        .info-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            border-bottom: 1px solid #eae7e0;
+            padding: 10px 0;
+            align-items: center;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .info-value.name {
+            font-size: 20px;
+            font-weight: 800;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .info-value a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent);
+            transition: all 0.2s;
+        }
+
+        .info-value a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        .description-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary);
+        }
+
+        .description-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .description-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text);
+            padding: 16px 20px;
+            background: #faf8f5;
+            border-left: 3px solid var(--accent);
+            font-weight: 400;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .channel-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .channel-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .channel-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26,42,74,0.15);
+        }
+
+        .channel-btn:hover::before {
+            width: 4px;
+        }
+
+        .channel-btn:hover .channel-icon {
+            background: var(--primary);
+            color: white;
+        }
+
+        .channel-btn:active {
+            transform: translateY(0);
+        }
+
+        .channel-icon {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .channel-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .channel-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .channel-role {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .channel-arrow {
+            margin-left: auto;
+            color: var(--border);
+            transition: all 0.25s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .channel-btn:hover .channel-arrow {
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .services-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+        }
+
+        .services-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .price-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .price-btn:hover::before {
+            left: 100%;
+        }
+
+        .price-btn:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 6px 24px rgba(26,42,74,0.3);
+            transform: translateY(-2px);
+        }
+
+        .price-btn:active {
+            transform: translateY(0);
+        }
+
+        .price-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent);
+        }
+
+        .price-btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .price-btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .footer-bar {
+            background: var(--primary);
+            padding: 20px 0;
+            border-top: 3px solid var(--accent);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-right {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .divider-ornament {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 8px 0;
+        }
+
+        .divider-ornament::before,
+        .divider-ornament::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider-ornament span {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 1px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #2e7d32;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 50%;
+            right: -120px;
+            transform: rotate(-90deg);
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(0,0,0,0.015);
+            letter-spacing: 20px;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+        }
+
+        /* Entry animations */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        .animate-in:nth-child(1) { animation-delay: 0.1s; }
+        .animate-in:nth-child(2) { animation-delay: 0.2s; }
+        .animate-in:nth-child(3) { animation-delay: 0.3s; }
+        .animate-in:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+                justify-items: center;
+            }
+
+            .avatar-frame {
+                width: 150px;
+                height: 190px;
+            }
+
+            .info-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .info-value.name {
+                font-size: 18px;
+            }
+
+            .channels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-title {
+                font-size: 20px;
+                letter-spacing: 3px;
+            }
+
+            .top-bar-title {
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+
+            .top-bar-right {
+                display: none;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .price-btn {
+                padding: 14px 28px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .doc-title {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+
+            .card-header {
+                font-size: 9px;
+                padding: 10px 16px;
+            }
+
+            .info-value {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark">ДОСЬЕ</div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <div class="top-bar-left">
+                <div class="gov-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.83-3.23 9.36-7 10.62-3.77-1.26-7-5.79-7-10.62V6.3l7-3.12z"/><path d="M10 12l-2-2-1.41 1.41L10 14.82l7-7L15.59 6.4z"/></svg>
+                </div>
+                <div>
+                    <div class="top-bar-title">Реестр Цифровых Идентификаций</div>
+                    <div class="top-bar-subtitle">Верифицированный Профиль</div>
+                </div>
+            </div>
+            <div class="top-bar-right" id="currentDate"></div>
+        </div>
+    </div>
+    <div class="classification-bar">
+        ● &nbsp; Документ открытого доступа &nbsp; ●
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Document Header -->
+        <div class="document-header animate-in">
+            <div class="doc-number">ДОСЬЕ № <span id="docNum">2025-001-RU</span></div>
+            <div class="doc-title">Личное Досье</div>
+            <div class="doc-subtitle">Идентификационная карточка субъекта</div>
+            <div class="divider-ornament"><span>◆</span></div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="main-card animate-in">
+            <div class="card-header">
+                <span>Раздел I — Персональные данные</span>
+                <span class="status-badge"><span class="status-dot"></span> Верифицирован</span>
+            </div>
+            <div class="card-body">
+                <div class="profile-section">
+                    <div class="avatar-container">
+                        <div class="avatar-frame">
+                            <img src="https://i.postimg.cc/wTs97h39/dos.jpg" 
+                                 alt="@richpayer" 
+                                 loading="lazy" 
+                                 style="width:100%; height:100%; object-fit: cover; display: block;">
+                        </div>
+                        <div class="stamp">
+                            <div class="stamp-inner">
+                                <div class="stamp-text">Подтв.</div>
+                                <div class="stamp-check">✓</div>
+                                <div class="stamp-text">2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-row">
+                            <div class="info-label">Юзернейм</div>
+                            <div class="info-value name">@richpayer</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">ID</div>
+                            <div class="info-value">35285259</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Почта</div>
+                            <div class="info-value"><a href="mailto:your@email.com">Azazel@gmail.com</a></div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Статус</div>
+                            <div class="info-value" style="color: #2e7d32; font-family: 'Inter', sans-serif; font-size: 13px;">● Активен</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Роль</div>
+                            <div class="info-value" style="font-family: 'Inter', sans-serif; font-size: 13px;">Администратор / Владелец</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Дата Рег.</div>
+                            <div class="info-value">Июль 2014</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <div class="description-label">О Субъекте — Описание</div>
+                    <div class="description-text">
+                        Специалист по очистке Telegram-пространства.
+Занимаюсь удалением каналов, чатов, ботов и аккаунтов по запросу заказчика. Работаю конфиденциально, быстро и в рамках технических возможностей платформы.
+Опыт в тематике — более 2 лет. Обращайтесь в ЛС, обсудим задачу и стоимость.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Channels Card -->
+        <div class="section-card animate-in">
+            <div class="card-header">
+                <span>Раздел II — Каналы под управлением</span>
+                <span class="card-header-badge">4 Канала</span>
+            </div>
+            <div class="card-body">
+                <div class="channels-grid">
+                    <a href="https://t.me/anonymitysystem/4" class="channel-btn" target="_blank">
+                        <div class="channel-icon">01</div>
+                        <div class="channel-info">
+                            <div class="channel-name">anonymity system</div>
+                            <div class="channel-role">Администратор</div>
+                        </div>
+                        <div class="channel-arrow">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </a>
+                    <a href="https://t.me/orden21" class="channel-btn" target="_blank">
+                        <div class="channel-icon">02</div>
+                        <div class="channel-info">
+                            <div class="channel-name">Орден Тамплиеров</div>
+                            <div class="channel-role">Администратор</div>
+                        </div>
+                        <div class="channel-arrow">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </a>
+                    <a href="https://t.me/welsimkas" class="channel-btn" target="_blank">
+                        <div class="channel-icon">03</div>
+                        <div class="channel-info">
+                            <div class="channel-name">wls back</div>
+                            <div class="channel-role">Администратор</div>
+                        </div>
+                        <div class="channel-arrow">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </a>
+                    <a href="https://t.me/richpayerok" class="channel-btn" target="_blank">
+                        <div class="channel-icon">04</div>
+                        <div class="channel-info">
+                            <div class="channel-name">RichPayer.ton</div>
+                            <div class="channel-role">Владелец</div>
+                        </div>
+                        <div class="channel-arrow">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Card -->
+        <div class="section-card animate-in">
+            <div class="card-header">
+                <span>Раздел III — Услуги и Прайс-лист</span>
+                <span class="card-header-badge">Открыто</span>
+            </div>
+            <div class="card-body">
+                <div class="services-section">
+                    <div class="services-text">
+                        Ознакомьтесь с полным перечнем услуг и актуальными ценами
+                    </div>
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+                        <!-- Вставьте вашу ссылку на прайс-лист в href -->
+                        <a href="https://azazel-com.github.io/price/" class="price-btn" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                            Прайс-лист
+                        </a>
+                        <!-- Вторая кнопка — например, связаться -->
+                        <a href="https://t.me/richpayer" class="price-btn-secondary" target="_blank">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            Связаться
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-bar">
+        <div class="footer-inner">
+            <div class="footer-left">Документ сформирован автоматически • Все права защищены</div>
+            <div class="footer-right" id="footerTime"></div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        const now = new Date();
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        document.getElementById('currentDate').textContent = now.toLocaleDateString('ru-RU', options);
+        
+        // Set footer time
+        function updateTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const date = now.toLocaleDateString('ru-RU');
+            document.getElementById('footerTime').textContent = `${date} | ${time} MSK`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Generate doc number
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const rnd = String(Math.floor(Math.random() * 9000) + 1000);
+        document.getElementById('docNum').textContent = `${year}-${month}-${rnd}-RU`;
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
